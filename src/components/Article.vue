@@ -3,7 +3,6 @@
     <div>
       <router-link to="/">Назад</router-link>
     </div>
-    {{ id }}
     <h3>{{ article.title }}</h3>
     <p>{{ article.body }}</p>
   </div>
@@ -18,7 +17,7 @@ export default {
   },
   data () {
     return {
-      id: this.$route.params.id,
+      id: parseInt(this.$route.params.id),
       article: {}
     }
   },
@@ -27,11 +26,18 @@ export default {
       fetch(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
         .then(response => response.json())
         .then(json => this.article = json)
+      try {
+        const ids = JSON.parse(localStorage.getItem('ids')) || [];
+        if (!ids.includes(this.id)) {
+          localStorage.setItem('ids', JSON.stringify([...ids, this.id]))
+        }
+      } catch(e) {
+        localStorage.removeItem('cats');
+      }
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
