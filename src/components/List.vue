@@ -7,7 +7,6 @@
         :key="article.id"
       > {{ article.id }}
         <router-link :to="`/article/${article.id}`">{{ article.title }} {{ viewedIds.includes(article.id) ? "(visited)" : " " }}</router-link>
-        <!-- <span class="link" @click="() => {selectArticle(article)}">{{ article.title }}</span> -->
       </div>
     </div>
   </div>
@@ -46,6 +45,5 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

@@ -3,8 +3,8 @@
     <div>
       <router-link to="/">Назад</router-link>
     </div>
-    <h3>{{ article.title }}</h3>
-    <p>{{ article.body }}</p>
+    <h3 v-if="article.title">{{ article.title }}</h3>
+    <p v-if="article.body">{{ article.body }}</p>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
           localStorage.setItem('ids', JSON.stringify([...ids, this.id]))
         }
       } catch(e) {
-        localStorage.removeItem('cats');
+        //
       }
     }
   }
