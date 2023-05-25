@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { getRequest } from '@/helpers';
+
 export default {
   name: 'Article',
   props: {
@@ -21,11 +23,13 @@ export default {
       article: {}
     }
   },
-  mounted() {
+  async mounted() {
     if (this.id) {
-      fetch(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
-        .then(response => response.json())
-        .then(json => this.article = json)
+      this.article = (await getRequest(`https://jsonplaceholder.typicode.com/posts/${this.id}`) || {});
+      const userId = this.article.userId;
+      if (userId) {
+        this.author = await getRequest(`https://jsonplaceholder.typicode.com/posts/${this.id}`);
+      }
       try {
         const ids = JSON.parse(localStorage.getItem('ids')) || [];
         if (!ids.includes(this.id)) {

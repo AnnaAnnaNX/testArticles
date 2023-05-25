@@ -3,10 +3,10 @@
     <div>
       <h3>Список статей</h3>
       <div
-        v-for="article in list"
+        v-for="article in formattedList"
         :key="article.id"
       > {{ article.id }}
-        <router-link :to="`/article/${article.id}`">{{ article.title }} {{ viewedIds.includes(article.id) ? "(visited)" : " " }}</router-link>
+        <router-link :to="`/article/${article.id}`">{{ article.title }} {{ article.visited ? "(visited)" : "" }}</router-link>
       </div>
     </div>
   </div>
@@ -35,9 +35,13 @@ export default {
         //
       }
   },
+  computed: {
+    formattedList() {
+      return this.list.map(article => ({...article, visited: this.viewedIds.includes(article.id)}))
+    }
+  },
   methods: {
     selectArticle: function (article) {
-      console.log(article.id);
       this.title = article.title;
       this.body = article.body;
     }
